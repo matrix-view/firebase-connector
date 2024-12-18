@@ -27,7 +27,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: my-docker-hub-namespace/my-docker-hub-repository
+          images: eliasjunioroliveira/matrix-view-firebase-connector/${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
 
       - name: Build and push Docker image
         id: push
@@ -41,10 +41,7 @@ jobs:
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
-        env:
-          REGISTRY: eliasjunioroliveira/matrix-view-firebase-connector
-          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_TAG}}
+          subject-name: eliasjunioroliveira/matrix-view-firebase-connector/${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
