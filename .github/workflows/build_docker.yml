@@ -35,7 +35,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: eliasjunioroliveira/matrix-view-firebase-connector/${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
+          images: eliasjunioroliveira/matrix-view-firebase-connector:${{ steps.get-commit-hash.outputs.commit-hash }}
 
       - name: Build and push Docker image
         id: push
