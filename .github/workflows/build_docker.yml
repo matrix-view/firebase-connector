@@ -45,10 +45,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: eliasjunioroliveira/matrix-view-firebase-connector:${{ steps.get-timestamp.outputs.timestamp }}
-
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v2
-        with:
-          subject-name: eliasjunioroliveira/matrix-view-firebase-connector/${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
