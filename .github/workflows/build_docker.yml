@@ -41,7 +41,10 @@ jobs:
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
+        env:
+          REGISTRY: eliasjunioroliveira/matrix-view-firebase-connector
+          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_TAG}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
