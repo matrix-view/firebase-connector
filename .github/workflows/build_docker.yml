@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+      - develop
+
+env:
+  DOCKER_REPOSITORY: eliasjunioroliveira/matrix-view-firebase-connectorliasjunioroliveira/matrix-view-firebase-connector
+
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -39,7 +44,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: eliasjunioroliveira/matrix-view-firebase-connector:${{ steps.package-version.outputs.current-version}}-${{ steps.get-timestamp.outputs.timestamp }}
+          images: ${{ env.DOCKER_REPOSITORY }}:${{ steps.package-version.outputs.current-version }}-${{ steps.get-timestamp.outputs.timestamp }}
 
       - name: Build and push Docker image
         id: push
@@ -48,4 +53,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: eliasjunioroliveira/matrix-view-firebase-connector:${{ steps.package-version.outputs.current-version}}-${{ steps.get-timestamp.outputs.timestamp }}
+          tags: ${{ steps.meta.outputs.images }}
