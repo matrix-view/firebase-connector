@@ -42,7 +42,6 @@ const produceMessages = async (context) => {
 
     return new Promise((resolve, reject) => {
         producer.on('ready', function () {
-            console.log("Producer ready")
             producer.send(payloads, function (err, data) {
                 resolve(true)
             });

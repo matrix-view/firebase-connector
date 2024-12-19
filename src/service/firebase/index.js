@@ -13,7 +13,7 @@ const watchCollections = async context => {
                         collectionBinding.collection,
                         { id: snapshotData.id,  ...data }
                     )
-                    console.log(`Handling entity: ${message.id} messages: ${JSON.stringify(message)}`);
+                    console.log(`[producing message] key: ${message.key} message: ${JSON.stringify(message)}`);
                     service.kafkaService.produceMessages({
                         ...context,
                         payloads: [

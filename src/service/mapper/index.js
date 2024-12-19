@@ -1,5 +1,6 @@
 const mapDataCollection = firebaseData => {
     return {
+        key: firebaseData.id,
         ...firebaseData
     }
 }
