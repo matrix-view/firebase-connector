@@ -5,21 +5,24 @@ const watchCollections = async context => {
 
     for (const collectionBinding of collections) {
         db.collection(collectionBinding.collection)
-            .limit(5)
             .onSnapshot(snapshot => {
-                snapshot.forEach(snapshotData => {
-                    const data = snapshotData.data()
+                snapshot.docChanges().forEach(change => {
+                    const id = change.doc.id
+                    const data = change.doc.data()
+                    const type = change.type
+
                     const message = service.mapper.convertFirebaseDataToKafkaInput(
                         collectionBinding.collection,
-                        { id: snapshotData.id,  ...data }
+                        { id, type,  ...data }
                     )
-                    console.log(`[producing message] key: ${message.key} message: ${JSON.stringify(message)}`);
+                    console.log(`[producing message] key: ${id} message: ${JSON.stringify(message)}`);
+
                     service.kafkaService.produceMessages({
                         ...context,
                         payloads: [
                             {
                                 topic: collectionBinding.topic,
-                                key: message.key,
+                                key: id,
                                 messages: [JSON.stringify(message)]
                             },
                         ]

@@ -1,7 +1,9 @@
+const moment = require('moment')
+
 const mapDataCollection = firebaseData => {
     return {
-        key: firebaseData.id,
-        ...firebaseData
+        ...firebaseData,
+        dateTime: moment().format('YYYY-MM-DD HH:mm:ss')
     }
 }
 
