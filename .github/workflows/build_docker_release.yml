@@ -1,10 +1,9 @@
-name: Push the Docker image to dockerhub Repository
+name: Push the Docker image snapshot to dockerhub Repository
 
 on:
   push:
     branches:
-      - main
-      - develop
+      - '**release**'
 
 env:
   DOCKER_REPOSITORY: eliasjunioroliveira/matrix-view-firebase-connector
@@ -38,11 +37,11 @@ jobs:
 
       - name: Get timestamp
         id: get-timestamp
-        run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
+        run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M-%S')"
 
       - name: Get tag
         id: get-tag
-        run: echo "::set-output name=tag::${{ env.DOCKER_REPOSITORY }}:${{ steps.package-version.outputs.current-version }}-${{ steps.get-timestamp.outputs.timestamp }}"
+        run: echo "::set-output name=tag::${{ env.DOCKER_REPOSITORY }}:${{ steps.package-version.outputs.current-version }}-${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}"
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
