@@ -131,3 +131,4 @@ dist
 
 
 .idea
+/src/configuration/firebase-service-account.json

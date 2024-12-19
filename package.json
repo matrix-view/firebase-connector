@@ -4,10 +4,7 @@
   "description": "Firebase connector to provide data to kafka broker",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-
-
-    "execute:create-topics": "node src/executors/create-topics.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

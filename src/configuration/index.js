@@ -7,6 +7,8 @@ try {
     console.log('Local config');
 }
 
+const firebase = require('./firebase')
+
 module.exports = {
-    env, ...config,
+    env, ...config, ...firebase
 }
