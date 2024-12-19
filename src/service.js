@@ -1,17 +1,11 @@
 const configuration = require('./configuration')
-
 const kafkaService = require('./service/kafka')
-
-const userService = require('./service/user')
-const menuService = require('./service/menu')
-const activityService = require('./service/activity')
+const firebaseService = require('./service/firebase')
+const mapper = require('./service/mapper')
 
 module.exports = {
-
     configuration,
-    userService,
-    menuService,
-    activityService,
+    mapper,
     kafkaService,
-
+    firebaseService,
 }

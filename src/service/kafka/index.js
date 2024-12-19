@@ -1,6 +1,12 @@
 const {Consumer, ConsumerGroupStream} = require("kafka-node");
 const service = require("../../service");
-const kafka = require("kafka-node");
+
+const kafka = require('kafka-node'),
+    Producer = kafka.Producer,
+    client = new kafka.KafkaClient({
+        kafkaHost: service.configuration['kafka-broker']
+    }),
+    producer = new Producer(client);
 
 const payloads = [
     {
@@ -29,8 +35,7 @@ const options = {
 }
 
 const produceMessages = async (context) => {
-    const {kafka, payloads} = context
-    const {producer} = kafka
+    const {payloads} = context
 
     return new Promise((resolve, reject) => {
         producer.on('ready', function () {
