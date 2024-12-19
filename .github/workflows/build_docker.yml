@@ -1,4 +1,4 @@
-name: Push the Docker image to AWS ECR Repo
+name: Push the Docker image to dockerhub Repository
 
 on:
   push:
@@ -43,8 +43,10 @@ jobs:
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        env:
+          image: ${{ env.DOCKER_REPOSITORY }}:${{ steps.package-version.outputs.current-version }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
-          images: ${{ env.DOCKER_REPOSITORY }}:${{ steps.package-version.outputs.current-version }}-${{ steps.get-timestamp.outputs.timestamp }}
+          images: ${{ env.image }}
 
       - name: Build and push Docker image
         id: push
@@ -53,4 +55,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.images }}
+          tags: ${{ steps.meta.env.image }}
