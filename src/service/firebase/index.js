@@ -17,7 +17,11 @@ const watchCollections = async context => {
                     service.kafkaService.produceMessages({
                         ...context,
                         payloads: [
-                            { topic: collectionBinding.topic, messages: [JSON.stringify(message)] },
+                            {
+                                topic: collectionBinding.topic,
+                                key: message.key,
+                                messages: [JSON.stringify(message)]
+                            },
                         ]
                     })
                 })
