@@ -1,10 +1,15 @@
 const express = require("express");
 const app = express();
 
-app.get("/", function(req, res) {
+const service = require("./src/service");
+const { configuration } = service
+
+
+app.get("/", (req, res) => {
     return res.send("Working!");
 });
 
-app.listen(80, function(){
-    console.log('Listening on port 80');
+app.listen(configuration.port, () => {
+    console.log("Initializing with configuration", configuration.env);
+    console.log('Listening on port ' + configuration.port);
 });

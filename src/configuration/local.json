@@ -1,0 +1,4 @@
+{
+  "kafka-broker": "localhost:9092",
+  "port": 8081
+}
