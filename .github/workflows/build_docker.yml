@@ -40,13 +40,15 @@ jobs:
         id: get-timestamp
         run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
 
+      - name: Get tag
+        id: get-tag
+        run: echo "::set-output name=tag::${{ env.DOCKER_REPOSITORY }}:${{ steps.package-version.outputs.current-version }}-${{ steps.get-timestamp.outputs.timestamp }}"
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        env:
-          image: ${{ env.DOCKER_REPOSITORY }}:${{ steps.package-version.outputs.current-version }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
-          images: ${{ env.image }}
+          images: ${{ steps.get-tag.outputs.tag }}
 
       - name: Build and push Docker image
         id: push
@@ -55,4 +57,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.env.image }}
+          tags:  ${{ steps.get-tag.outputs.tag }}
